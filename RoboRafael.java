@@ -1,6 +1,6 @@
 package capacitacao;
 import robocode.*;
-//import java.awt.Color;
+import java.awt.Color;
 
 // API help : https://robocode.sourceforge.io/docs/robocode/robocode/Robot.html
 
@@ -12,6 +12,7 @@ public class RoboRafael extends Robot
 	/**
 	 * run: RoboRafael's default behavior
 	 */
+	
 	public void run() {
 		// Initialization of the robot should be put here
 
@@ -22,38 +23,52 @@ public class RoboRafael extends Robot
 
 		// Robot main loop
 		
-		setBodyColor(Color.black);
-  		setGunColor(Color.black);
-  		setRadarColor(Color.white);
+		setColors(Color.black,Color.black,Color.white);
   		setScanColor(Color.white);
 		setBulletColor(Color.white);
+		
+
 
 		while(true) {
 			// Replace the next 4 lines with any behavior you would like
 			ahead(100); //pra frente
 			turnGunRight(360);
-			back(100); // volta
+			turnRight(180); // volta
+			ahead(100); 
 			turnGunRight(360);
+			
 			turnRight(180); //pra trás
 			ahead(100); 
 			turnGunRight(360);
-			turnRight();
-			ahead(100);
+			turnRight(180); // volta
+			ahead(100); 
+			turnGunRight(360);
+			
+			turnRight(90); //esquerda
+			ahead(100); 
+			turnGunRight(360);
+			turnRight(180); // volta
+			ahead(100); 
+			turnGunRight(360);
+			
+			turnRight(180); //direita
 			ahead(100);
 			turnGunRight(360);
-			right(100);
-			turnGunRight(360);
-			left(100);
+			turnRight(180); //volta
+			ahead(100); 
 			turnGunRight(360);
 		}
 	}
+	
+
 
 	/**
 	 * onScannedRobot: What to do when you see another robot
 	 */
 	public void onScannedRobot(ScannedRobotEvent e) {
 		// Replace the next line with any behavior you would like
-		double max = 100;
+		//double max = 100;
+		fire(1);
 	}
 
 	/**
@@ -61,14 +76,19 @@ public class RoboRafael extends Robot
 	 */
 	public void onHitByBullet(HitByBulletEvent e) {
 		// Replace the next line with any behavior you would like
-		turnRight(90);
+		turnGunRight(360);
+		fire(1);
 		back(100);
+	}
+	
+	public void onBulletHit(BulletHitEvent e) {
+		// Replace the next line with any behavior you would like
+		fire(1);
 	}
 	
 	public void onHitRobot(HitRobotEvent e) {
 		//quando acertar outro robo
-		//tiroFatal(e.getBearing(), e.getEnergy(), getEnergy());		
-		//usar tiro mais forte possivel
+		fire(1);
     	}
 
 	
@@ -82,8 +102,8 @@ public class RoboRafael extends Robot
 	}
 	public void onWin(WinEvent e) {	
 		//quando vitória
-     	turnRight(72000);
-		//modificar a cor
+     	turnRight(36000);
+		
    	}   
 	
 }
