@@ -68,7 +68,16 @@ public class RoboRafael extends Robot
 	public void onScannedRobot(ScannedRobotEvent e) {
 		// Replace the next line with any behavior you would like
 		//double max = 100;
-		fire(1);
+			// If the other robot is close by, and we have plenty of life,
+		// fire hard!
+		if (e.getDistance() < 50 && getEnergy() > 50) {
+			fire(3);
+		} // otherwise, fire 1.
+		else {
+			fire(1);
+		}
+		// Call scan again, before we turn the gun
+		scan();
 	}
 
 	/**
@@ -76,9 +85,7 @@ public class RoboRafael extends Robot
 	 */
 	public void onHitByBullet(HitByBulletEvent e) {
 		// Replace the next line with any behavior you would like
-		turnGunRight(360);
-		fire(1);
-		back(100);
+		turnLeft(90 - e.getBearing());
 	}
 	
 	public void onBulletHit(BulletHitEvent e) {
@@ -88,7 +95,7 @@ public class RoboRafael extends Robot
 	
 	public void onHitRobot(HitRobotEvent e) {
 		//quando acertar outro robo
-		fire(1);
+		tiroForte(e.getBearing(), e.getEnergy(), getEnergy());	
     	}
 
 	
@@ -105,5 +112,22 @@ public class RoboRafael extends Robot
      	turnRight(36000);
 		
    	}   
+
+	public void tiroForte(double PosIni, double energyIni, double energiaRobo) {
+		//tiro com mais força
+		double posicao = getHeading() + PosIni - getGunHeading();
+		double tiro = (energyIni / 4) + .1;
+
+		if (!(posicao > -80 && posicao <= 180)) {
+			while (posicao <=-180)
+				posicao += 360;
+			while (posicao > 180)
+				posicao -=360;
+		}
+
+		turnGunRight(posicao);
+		fire(tiro);
+			
+	}
 	
 }
